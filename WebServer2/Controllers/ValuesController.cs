@@ -18,11 +18,9 @@ namespace WebServer2.Controllers
         public string Value = "";
 
         // GET: api/BusBeacons
-        public string GetBusBeacons()
+        public IEnumerable<Bus> GetBusBeacons()
         {
-            //string s = new JavaScriptSerializer().Serialize(BusList);
-            string s = JsonConvert.SerializeObject(BusList);
-            return s;
+            return BusList;
         }
 
         // POST: api/Values
