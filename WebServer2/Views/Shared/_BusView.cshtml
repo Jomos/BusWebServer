@@ -1,0 +1,49 @@
+﻿@model WebServer2.Models.ViewModels.ViewModel
+
+<div>
+    @if (@Model.BusNumber != null)
+    {
+        <h4>View of bus number @Model.BusNumber</h4>
+    }
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfPassengers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfPassengers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SittingPassengers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SittingPassengers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StandingPassangers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StandingPassangers)
+        </dd>
+
+    </dl>
+    <svg width="400" height="100">
+        @*<rect width="400" height="100" style="fill:rgb(0,0,255);stroke-width:10;stroke:rgb(0,0,0)" />*@
+        @if (Model.BusImage != null)
+        {
+            <image x="0" y="0" width="400" height="100" xlink:href="~/Images/@Model.BusImage"/>
+        }
+        @foreach (var person in Model.Persons)
+        {
+            <circle cx="@person.XPosition" cy="@person.YPosition" r="5"
+                    stroke="green" stroke-width="2" fill="yellow"/>
+        }
+        Sorry, your browser does not support inline SVG.
+    </svg>
+</div>
+

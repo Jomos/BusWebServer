@@ -1,0 +1,32 @@
+﻿@model WebServer2.Models.ViewModels.ViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Bus view</h2>
+
+<div>
+    @using (Html.BeginForm("Select", "Home", FormMethod.Get))
+    {
+        if (Model.BusNumbers != null && Model.BusNumbers.Count() > 1)
+        {
+            @Html.DropDownListFor(m => m.BusNumber, Model.BusNumbers)
+            <input type="submit" value="Submit" class="btn,btn-default"/>
+        }
+    }
+    
+
+
+    <div id="BusView">
+        @Html.Partial("_BusView", Model)
+    </div>
+</div>
+@section Scripts {
+    
+@Scripts.Render("~/Scripts/UpdateInterval.js")
+}
+
+
+
+
