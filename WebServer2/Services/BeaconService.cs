@@ -7,6 +7,7 @@ using WebServer2.Models.ApiModels;
 using WebServer2.Models.RepositoryModels;
 using WebServer2.Models.ViewModels;
 using WebServer2.Repositories;
+using Bus = WebServer2.Models.RepositoryModels.Bus;
 
 namespace WebServer2.Services
 {
@@ -163,13 +164,13 @@ namespace WebServer2.Services
             return viewModel;
         }
 
-        public IEnumerable<SelectListItem> GetBusTypes()
+        public List<TypeListItem> GetBusTypesList()
         {
-            List<int> bustTypeList = repository.GetBusTypes();
-            List<SelectListItem> selectList = new List<SelectListItem>();
-            foreach (int busType in bustTypeList)
+            List<BusType> bustTypeList = repository.GetBusTypesList();
+            List<TypeListItem> selectList = new List<TypeListItem>();
+            foreach (BusType busType in bustTypeList)
             {
-                selectList.Add(new SelectListItem{Text = busType.ToString(),Value = busType.ToString()});
+                selectList.Add(new TypeListItem{Text = busType.Type,Value = busType.Id});
             }
             return selectList;
         }
@@ -179,9 +180,54 @@ namespace WebServer2.Services
             return repository.GetBusList();
         }
 
-        public void AddBus(AddBusModel busModel)
+        public void AddBus(BusModel busModel)
         {
-            throw new NotImplementedException();
+            Bus bus = new Bus {Number = busModel.BusNumber, TypeId = busModel.TypeId, Beacons = new List<BusBeacon>(),Id = busModel.BusId};
+            foreach (var beacon in busModel.Beacons)
+            {
+                bus.Beacons.Add(beacon);
+            }
+            repository.AddBus(bus);
+        }
+
+        internal BusModel GetBusList(int busId)
+        {
+            Bus repositoryBus = repository.GetBus(busId);
+            List<BusType> repositoryTypeList = repository.GetBusTypesList();
+            BusModel bus = new BusModel
+            {
+                BusId = busId,
+                TypeId = repositoryBus.TypeId,
+                BusNumber = repositoryBus.Number,
+                Type = repositoryTypeList.Single(x=>x.Id==repositoryBus.TypeId).Type,
+                Beacons = new BusBeacon[3],
+                TypesList = new List<TypeListItem>()
+            };
+            for (int i = 0; i < repositoryBus.Beacons.Count; i++)
+            {
+                bus.Beacons[i] = repositoryBus.Beacons[i];
+            }
+            List<BusType> bustTypeList = repository.GetBusTypesList();
+            foreach (BusType busType in bustTypeList)
+            {
+                bus.TypesList.Add(new TypeListItem { Text = busType.Type, Value = busType.Id });
+            }
+            return bus;
+        }
+
+        internal void DeleteBus(int busNumber)
+        {
+            repository.DeleteBus(busNumber);
+        }
+
+        internal void UpdateBus(BusModel model)
+        {
+            repository.UpdateBus(model);
+        }
+
+        internal List<BusType> GetBusTypes()
+        {
+            return repository.GetBusTypes();
         }
     }
 }

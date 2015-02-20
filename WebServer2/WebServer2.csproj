@@ -154,7 +154,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\BusBeaconsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -172,7 +171,7 @@
     <Compile Include="Models\RepositoryModels\BusType.cs" />
     <Compile Include="Models\ApiModels\JsonObject.cs" />
     <Compile Include="Models\ApiModels\Passenger.cs" />
-    <Compile Include="Models\ViewModels\AddBusModel.cs" />
+    <Compile Include="Models\ViewModels\BusModel.cs" />
     <Compile Include="Models\ViewModels\BusListItem.cs" />
     <Compile Include="Models\ViewModels\Person.cs" />
     <Compile Include="Models\RepositoryModels\SittingArea.cs" />
@@ -211,6 +210,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <None Include="Properties\PublishProfiles\Custom Publish.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\UpdateInterval.js" />
@@ -240,6 +240,9 @@
     <Content Include="Views\Shared\_BusView.cshtml" />
     <Content Include="Views\Home\AddBus.cshtml" />
     <Content Include="Views\Home\BusList.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Home\TypeList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201501261119225_InitialCreate.resx">

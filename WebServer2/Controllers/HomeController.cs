@@ -19,9 +19,9 @@ namespace WebServer2.Controllers
         }
 
         
-        public ActionResult Select(int busNumber)
+        public ActionResult Select(int busId)
         {
-            ViewModel viewModel = service.FillViewModel(busNumber);
+            ViewModel viewModel = service.FillViewModel(busId);
 
             return View("Index",viewModel);
 
@@ -36,6 +36,15 @@ namespace WebServer2.Controllers
 
         }
 
+        [OutputCache(NoStore = true, Location = OutputCacheLocation.Client, Duration = 1)] // update evry sec
+        public ActionResult GetBusView(int id)
+        {
+            ViewModel viewModel = service.FillViewModel(id);
+
+            return PartialView("_BusView", viewModel);
+
+        }
+
         public ActionResult BusList()
         {
             var busList = service.GetBusList();
@@ -44,18 +53,60 @@ namespace WebServer2.Controllers
 
         public ActionResult AddBus()
         {
-            AddBusModel busModel=new AddBusModel();
+            BusModel busModel=new BusModel();
             busModel.Beacons=new BusBeacon[3];
-            busModel.TypesList = service.GetBusTypes();
+            busModel.Type = "";
+            busModel.TypesList = service.GetBusTypesList();
             return View(busModel);
         }
 
         [HttpPost]
-        public ActionResult AddBus(AddBusModel model)
+        public ActionResult AddBus(BusModel model)
         {
+            var busList = service.GetBusList();
+            return View("BusList",busList);
+        }
 
-            service.AddBus(model);
-            return View(model);
+        public ActionResult Edit(int id)
+        {
+            BusModel bus=service.GetBusList(id);
+            return View(bus);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(BusModel model)
+        {
+            service.UpdateBus(model);
+            var busList = service.GetBusList();
+            return View("BusList",busList);
+        }
+
+        public ActionResult Details(int id)
+        {
+            BusModel bus = service.GetBusList(id);
+            return View(bus);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            service.DeleteBus(id);
+            return View("BusList");
+        }
+
+        public ActionResult TypeList()
+        {
+            List<BusType> types = service.GetBusTypes();
+            return View(types);
+        }
+
+        public ActionResult EditType(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ActionResult CreateType()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

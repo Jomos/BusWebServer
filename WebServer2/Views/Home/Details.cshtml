@@ -1,0 +1,60 @@
+﻿@model WebServer2.Models.ViewModels.BusModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BusModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @Html.HiddenFor(m=>m.BusId)
+        @Html.HiddenFor(m => m.TypeId)
+        <dt>
+            @Html.DisplayNameFor(model => model.BusNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BusNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        @for (int i = 0; i < 3; i++)
+        {
+            <hr/>
+            <dt>
+                <p>Beacon @(i + 1) UUID:</p>
+            </dt>
+            <dd>
+                @Html.DisplayFor(m => m.Beacons[i].BeaconUUID)
+            </dd>
+            <dt>
+                <p>Beacon @(i + 1) Major:</p>
+            </dt>
+            <dd>
+                @Html.DisplayFor(m => m.Beacons[i].BeaconMajor)
+            </dd>
+            <dt>
+                <p>Beacon @(i + 1) Minor:</p>
+            </dt>
+            <dd>
+                @Html.DisplayFor(m => m.Beacons[i].BeaconMinor)
+            </dd>
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {id = Model.BusId}) |
+    @Html.ActionLink("Back to List", "BusList")
+</p>
+
+

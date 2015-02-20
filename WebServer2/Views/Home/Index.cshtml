@@ -15,15 +15,19 @@
             <input type="submit" value="Submit" class="btn,btn-default"/>
         }
     }
-    
-
 
     <div id="BusView">
         @Html.Partial("_BusView", Model)
     </div>
+
 </div>
+
+@*<script>
+    $(function () {
+        setInterval(function () { $('#BusView').load("home/GetBusView/"); }, 1000); // update evry sec
+    });
+</script>*@
 @section Scripts {
-    
 @Scripts.Render("~/Scripts/UpdateInterval.js")
 }
 

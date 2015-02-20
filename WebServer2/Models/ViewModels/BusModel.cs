@@ -9,13 +9,21 @@ using WebServer2.Models.RepositoryModels;
 
 namespace WebServer2.Models.ViewModels
 {
-    public class AddBusModel
+    public class BusModel
     {
+        public int BusId { get; set; }
+        public int TypeId { get; set; }
         [DisplayName("Bus number")]
         public int BusNumber { get; set; }
         [DisplayName("Bus type")]
-        public IEnumerable<SelectListItem> TypesList { get; set; }
-        public int Type { get; set; }
+        public List<TypeListItem> TypesList { get; set; }
+        public string Type { get; set; }
         public BusBeacon[] Beacons { get; set; }
+    }
+
+    public class TypeListItem
+    {
+        public string Text { get; set; }
+        public int Value { get; set; }
     }
 }

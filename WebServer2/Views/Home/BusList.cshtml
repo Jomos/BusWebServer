@@ -1,33 +1,82 @@
 ﻿@model IEnumerable<WebServer2.Models.ViewModels.BusListItem>
 
 <p>
-    @Html.ActionLink("Create new bus", "AddBus")
+    @Html.ActionLink("Add new bus", "AddBus")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Number)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th></th>
-    </tr>
+@if (Model!=null)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Number)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+                    @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                    <a onclick="deleteFunction(this, @item.Id)">Delete</a>
+                </td>
+
+            </tr>
+        }
+
+    </table>
 }
 
-</table>
+<!-- Modal HTML -->
+<div id="myModal" class="modal hide fade" >
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p>Do you want to save changes you made to document before closing?</p>
+        <p class="text-warning">
+            <small>If you don't save, your changes will be lost.</small>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn">Close</a>
+        <a href="#" class="btn btn-primary">Save changes</a>
+    </div>
+</div>
+
+<script>
+    function deleteFunction(element,id) {
+        $(element).closest("tr").css('background-color', 'red');
+        $(document).ready(function () {
+            var answer = confirm("Are you sure you want to delete this bus?");
+            if (answer) {
+                $.post(
+            '@Url.Action("Delete", "Home")',
+            {
+                'id': id
+            },
+            function (data) { },
+            "json"
+            );
+                $(element).closest("tr").remove();
+                return true;
+            } else {
+                $(element).closest("tr").css('background-color', 'initial');
+                return false;
+            }
+        });
+    }
+</script>
+

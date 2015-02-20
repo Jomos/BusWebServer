@@ -9,9 +9,10 @@ namespace WebServer2.Models.ViewModels
 {
     public class BusListItem
     {
+        public int Id { get; set; }
         [DisplayName("Bus number")]
         public int Number { get; set; }
         [DisplayName("Bus type")]
-        public int Type { get; set; }
+        public string Type { get; set; }
     }
 }
