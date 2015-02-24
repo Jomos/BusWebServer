@@ -101,7 +101,23 @@ namespace WebServer2.Controllers
 
         public ActionResult EditType(int id)
         {
-            throw new System.NotImplementedException();
+            BusType type = service.GetBusType(id);
+            return View(type);
+        }
+
+        [HttpPost]
+        public ActionResult EditType(BusType model, string btnSubmit)
+        {
+            if(btnSubmit == "Add Sitting Area")
+            {
+                model.SittingAreas.Add(new SittingArea());
+                return View(model);
+            }
+            else
+            {
+                service.UpdateBusType(model);
+                return View("TypeList");
+            }
         }
 
         public ActionResult CreateType()

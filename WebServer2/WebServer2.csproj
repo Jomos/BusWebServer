@@ -243,6 +243,7 @@
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\Home\Details.cshtml" />
     <Content Include="Views\Home\TypeList.cshtml" />
+    <Content Include="Views\Home\EditType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201501261119225_InitialCreate.resx">

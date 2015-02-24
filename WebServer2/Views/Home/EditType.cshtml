@@ -1,0 +1,73 @@
+﻿@model WebServer2.Models.RepositoryModels.BusType
+
+@{
+    ViewBag.Title = "EditType";
+}
+
+<h2>EditType</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>BusType</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <table>
+                    <tr><th>Number</th><th>X From</th><th>X To</th><th>Y From</th><th>Y To</th></tr>
+                    @for (int i = 0; i < Model.SittingAreas.Count; i++)
+        {
+                        <tr>
+                            <td>@(i+1)</td>
+                            <td>@Html.EditorFor(model => model.SittingAreas[i].XFrom, new { htmlAttributes = new { @class = "form-control" } })</td>
+                            <td>@Html.EditorFor(model => model.SittingAreas[i].XTo, new { htmlAttributes = new { @class = "form-control" } })</td>
+                            <td>@Html.EditorFor(model => model.SittingAreas[i].YFrom, new { htmlAttributes = new { @class = "form-control" } })</td>
+                            <td>@Html.EditorFor(model => model.SittingAreas[i].YTo, new { htmlAttributes = new { @class = "form-control" } })</td>
+                        </tr>
+        }
+                </table>
+                </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Add Sitting Area" class="btn btn-default" name="btnSubmit"/>
+                        </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Save" class="btn btn-default" name="btnSubmit"/>
+                            </div>
+                        </div>
+                    </div>
+                    }
+
+                    <div>
+                        @Html.ActionLink("Back to List", "TypeList")
+                    </div>
+
+                    @section Scripts {
+                        @Scripts.Render("~/bundles/jqueryval")
+                    }

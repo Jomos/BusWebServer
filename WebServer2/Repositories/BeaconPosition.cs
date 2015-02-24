@@ -168,5 +168,44 @@ namespace WebServer2.Repositories
                 return types;
             }
         }
+
+        internal BusType GetBusType(int id)
+        {
+            using (var db = new BeaconContext())
+            {
+                BusType type = db.BusTypes.Include(x => x.SittingAreas).Single(x=>x.Id==id);
+                return type;
+            }
+        }
+
+        internal void UpdateBusType(BusType model)
+        {
+            using(var db = new BeaconContext())
+            {
+                BusType type = db.BusTypes.Include(x => x.SittingAreas).Single(x => x.Id == model.Id);
+                type.Image = model.Image;
+                type.Type = model.Type;
+                //Delete deleted SittingAreas
+                List<SittingArea> deletedSittingAreas = new List<SittingArea>();
+                foreach(var sittigArea in type.SittingAreas)
+                {
+                    if (!model.SittingAreas.Any(x => x.Id == sittigArea.Id)) { deletedSittingAreas.Add(sittigArea);}
+                }
+                for(int i = 0; i < deletedSittingAreas.Count; i++)
+                {
+                    type.SittingAreas.Remove(deletedSittingAreas[i]);
+                }
+                //Update and add SittingAreas
+                foreach (var sittigArea in model.SittingAreas)
+                {
+                    if(sittigArea.Id != 0)
+                    {
+                        SittingArea sa = type.SittingAreas.Single(x => x.Id == sittigArea.Id);
+                    }
+                    else SittingArea sa = new SittingArea();
+                    
+                }
+            }
+        }
     }
 }

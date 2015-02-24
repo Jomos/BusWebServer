@@ -229,5 +229,30 @@ namespace WebServer2.Services
         {
             return repository.GetBusTypes();
         }
+
+        internal BusType GetBusType(int id)
+        {
+            return repository.GetBusType(id);
+        }
+
+        internal void UpdateBusType(BusType model)
+        {
+            List<SittingArea> sittingAreasNulList=new List<SittingArea>();
+            for(int i=0;i<model.SittingAreas.Count;i++)
+            {
+                if(model.SittingAreas[i].XFrom == 0 && model.SittingAreas[i].XTo == 0 && model.SittingAreas[i].YFrom == 0 && model.SittingAreas[i].YTo == 0)
+                {
+                    sittingAreasNulList.Add(model.SittingAreas[i]);
+                }
+            }
+            if(sittingAreasNulList.Count>0)
+            {
+                for(int i = 0; i <sittingAreasNulList.Count; i++)
+                {
+                    model.SittingAreas.Remove(sittingAreasNulList[i]);
+                }
+            }
+            repository.UpdateBusType(model);
+        }
     }
 }
